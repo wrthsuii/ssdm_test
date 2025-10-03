@@ -1,4 +1,3 @@
-# src/app.py
 from flask import Flask
 from flasgger import Swagger
 from src.api.api_rooms import rooms_bp

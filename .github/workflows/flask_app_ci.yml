@@ -31,7 +31,7 @@ jobs:
         push: true
         tags: ${{ secrets.DOCKERHUB_USERNAME }}/flask-api:latest
 
-    - name: Run tests inside container
+    - name: Run tests1 inside container
       run: |
         docker run --rm ${{ secrets.DOCKERHUB_USERNAME }}/flask-api:latest pytest /app/tests/
 
