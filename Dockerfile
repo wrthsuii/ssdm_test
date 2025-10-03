@@ -7,6 +7,7 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY src/ ./src/
+COPY tests/ ./tests/
 
 ENV FLASK_APP=src/app.py
 ENV FLASK_RUN_HOST=0.0.0.0
