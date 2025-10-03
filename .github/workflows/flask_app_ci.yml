@@ -9,9 +9,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    outputs:
-      image-tag: ${{ steps.build-image.outputs.image-tag }}
-
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3
@@ -20,16 +17,12 @@ jobs:
       uses: docker/setup-buildx-action@v2
 
     - name: Build Docker image
-      id: build-image
       uses: docker/build-push-action@v5
       with:
         context: .
         file: ./Dockerfile
-        push: false   # ще не пушимо
+        push: false
         tags: flask-api:latest
-      # щоб передати тег далі
-      outputs:
-        image-tag: flask-api:latest
 
   test:
     runs-on: ubuntu-latest
@@ -38,8 +31,12 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v3
 
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+
     - name: Run tests inside container
       run: |
+        docker build -t flask-api:latest .
         docker run --rm flask-api:latest pytest /app/tests/
 
   deploy:
